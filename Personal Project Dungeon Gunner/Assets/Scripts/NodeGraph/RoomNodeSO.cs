@@ -39,13 +39,23 @@ public class RoomNodeSO : ScriptableObject
         // start region to detect popup selection changes
         EditorGUI.BeginChangeCheck();
 
-        // display a popup using the RoomNodeType name values that can be selected from (default to currently set roomNodeType)
-        int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+        //if the room node has a parent or is of type entrance, display a lable, else, display a popup
+        if (parentRoomNodeIDList.Count > 0 || roomNodeType.IsEntrance)
+        {
+            //display a label that cant be changed
+            EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
+        }
+        else
+        {
 
-        int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
+            // display a popup using the RoomNodeType name values that can be selected from (default to currently set roomNodeType)
+            int selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
 
-        roomNodeType = roomNodeTypeList.list[selection];
+            int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
 
+            roomNodeType = roomNodeTypeList.list[selection];
+
+        }
         if (EditorGUI.EndChangeCheck())
         
             EditorUtility.SetDirty(this);
@@ -91,10 +101,16 @@ public class RoomNodeSO : ScriptableObject
 
     private void processMouseDownEvent(Event currentEvent)
     {
-        // if left mouse button is clicked run process
+        // if left mouse button is down run process
         if(currentEvent.button == 0)
         {
             processLeftClickDownEvent();
+        }
+
+        // if right mouse button is down run process
+        if (currentEvent.button == 1)
+        {
+            processRightClickDownEvent(currentEvent);
         }
     }
 
@@ -113,6 +129,11 @@ public class RoomNodeSO : ScriptableObject
             isSelected = true;
         }
 
+    }
+
+    private void processRightClickDownEvent(Event currentEvent)
+    {
+        roomNodeGraph.setNodeToDrawLConnectionLineFrom(this, currentEvent.mousePosition);
     }
 
     private void processMouseUpEvent(Event currentEvent)
@@ -156,6 +177,19 @@ public class RoomNodeSO : ScriptableObject
         rect.position += delta;
         EditorUtility.SetDirty(this);
     }
+
+    public bool AddChildRoomNodeIDToRoomNode(string childID)
+    {
+        childRoomNodeIDList.Add(childID);
+        return true;
+    }
+
+    public bool AddParentRoomNodeIDToRoomNode(string parentID)
+    {
+        parentRoomNodeIDList.Add(parentID);
+        return true;
+    }
+
 #endif
     #endregion Editor Code
 }
