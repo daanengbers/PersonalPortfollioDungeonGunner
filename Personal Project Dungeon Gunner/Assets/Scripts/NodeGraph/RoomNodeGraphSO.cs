@@ -15,6 +15,7 @@ public class RoomNodeGraphSO : ScriptableObject
         LoadRoomNodeDictionary();
     }
 
+    //load the room node dictionary from the room node list
     private void LoadRoomNodeDictionary()
     {
         roomNodeDictionary.Clear();
@@ -23,6 +24,15 @@ public class RoomNodeGraphSO : ScriptableObject
         {
             roomNodeDictionary[node.id] = node;
         }
+    }
+
+    //get room node by room id
+    public RoomNodeSO GetRoomNode(string roomNodeID)
+    {
+        if(roomNodeDictionary.TryGetValue(roomNodeID, out RoomNodeSO roomNode)){
+            return roomNode;
+        }
+        return null;
     }
 
     #region Editor code
