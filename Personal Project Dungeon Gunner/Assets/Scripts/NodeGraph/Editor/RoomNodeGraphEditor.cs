@@ -181,6 +181,9 @@ public class RoomNodeGraphEditor : EditorWindow
         menu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
         menu.AddSeparator("");
         menu.AddItem(new GUIContent("select all room nodes"), false, SelectAllRoomNodes);
+        menu.AddSeparator("");
+        menu.AddItem(new GUIContent("Delete selected room node links"), false, DeleteSelectedRoomNodeLinks);
+        menu.AddItem(new GUIContent("Delete selected room nodes"), false, DeleteSelectedRoomNodes);
 
         menu.ShowAsContext();
     }
@@ -217,6 +220,97 @@ public class RoomNodeGraphEditor : EditorWindow
 
         // refresh graph node dictionary
         currentRoomNodeGraph.OnValidate();
+    }
+
+
+    // Delete links between selected roomNodes
+    private void DeleteSelectedRoomNodeLinks()
+    {
+        //iterate trough all roomNodes
+        foreach(RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+            if(roomNode.isSelected && roomNode.childRoomNodeIDList.Count > 0)
+            {
+                for(int i = roomNode.childRoomNodeIDList.Count -1; i >= 0; i--)
+                {
+                    // get child room node
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNode(roomNode.childRoomNodeIDList[i]);
+
+                    //if the child room node is selected
+                    if(childRoomNode != null && childRoomNode.isSelected)
+                    {
+                        //remove childID from parent room node
+                        roomNode.RemoveChildRoomNodeIDFromRoomNode(childRoomNode.id);
+
+                        //remove parentID from child room node
+                        childRoomNode.RemoveParentRoomNodeIDFromRoomNode(roomNode.id);
+                    }
+                }
+            }
+        }
+        //clear all selected room nodes
+        ClearAllSelectedRoomNode();
+    }
+
+    // delete room nodes
+    private void DeleteSelectedRoomNodes()
+    {
+        Queue<RoomNodeSO> roomNodeDeletionQueue = new Queue<RoomNodeSO>();
+
+        //loop trough all room nodes
+        foreach(RoomNodeSO roomNode in currentRoomNodeGraph.roomNodeList)
+        {
+            if(roomNode.isSelected && !roomNode.roomNodeType.IsEntrance)
+            {
+                roomNodeDeletionQueue.Enqueue(roomNode);
+
+                //iterate trough child room nodes ids
+                foreach(string childRoomNodeID in roomNode.childRoomNodeIDList)
+                {
+                    //retrieve childRoomNode
+                    RoomNodeSO childRoomNode = currentRoomNodeGraph.GetRoomNode(childRoomNodeID);
+
+                    if(childRoomNode != null)
+                    {
+                        //remove parentID from child room node
+                        childRoomNode.RemoveParentRoomNodeIDFromRoomNode(roomNode.id);
+                    }
+                }
+
+                //iterate trough parent room node ids
+                foreach(string parentRoomNodeID in roomNode.parentRoomNodeIDList)
+                {
+                    //retrieve parent node
+                    RoomNodeSO parentRoomNode = currentRoomNodeGraph.GetRoomNode(parentRoomNodeID);
+
+                    if(parentRoomNode != null)
+                    {
+                        //remoce childID from parent node
+                        parentRoomNode.RemoveChildRoomNodeIDFromRoomNode(roomNode.id);
+                    }
+                }
+            }
+        }
+
+        //delete queued room nodes
+        while (roomNodeDeletionQueue.Count > 0)
+        {
+            //get roomnode from queue
+            RoomNodeSO roomNodeToDelete = roomNodeDeletionQueue.Dequeue();
+
+            //remove node from dictionary
+            currentRoomNodeGraph.roomNodeDictionary.Remove(roomNodeToDelete.id);
+
+            //remove node from room node list
+            currentRoomNodeGraph.roomNodeList.Remove(roomNodeToDelete);
+
+            //remove node from asset database
+            DestroyImmediate(roomNodeToDelete, true);
+
+            //save asset database 
+            AssetDatabase.SaveAssets();
+        }
+
     }
 
 

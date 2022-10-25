@@ -7,8 +7,8 @@ using UnityEngine;
 public class RoomNodeSO : ScriptableObject
 {
     [HideInInspector] public string id;
-    [HideInInspector] public List<string> parentRoomNodeIDList = new List<string>();
-    [HideInInspector] public List<string> childRoomNodeIDList = new List<string>();
+     public List<string> parentRoomNodeIDList = new List<string>();
+     public List<string> childRoomNodeIDList = new List<string>();
     [HideInInspector] public RoomNodeGraphSO roomNodeGraph;
     public RoomNodeTypeSO roomNodeType;
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
@@ -54,6 +54,34 @@ public class RoomNodeSO : ScriptableObject
             int selection = EditorGUILayout.Popup("", selected, GetRoomNodeTypesToDisplay());
 
             roomNodeType = roomNodeTypeList.list[selection];
+
+            //if the room type selection has changed making child connections potentially invalid
+            if (roomNodeTypeList.list[selected].IsCorridor && !roomNodeTypeList.list[selection].IsCorridor ||
+                !roomNodeTypeList.list[selected].IsCorridor && roomNodeTypeList.list[selection].IsCorridor ||
+                !roomNodeTypeList.list[selected].IsBossRoom && roomNodeTypeList.list[selection].IsBossRoom)
+            {
+
+                //if a room node type has been changed and it already has children then delete the parent child links since we need to revalidate
+                    if (childRoomNodeIDList.Count > 0)
+                    {
+                        for (int i = childRoomNodeIDList.Count - 1; i >= 0; i--)
+                        {
+                            // get child room node
+                            RoomNodeSO childRoomNode = roomNodeGraph.GetRoomNode(childRoomNodeIDList[i]);
+
+                            //if the child room node is selected
+                            if (childRoomNode != null)
+                            {
+                                //remove childID from parent room node
+                               RemoveChildRoomNodeIDFromRoomNode(childRoomNode.id);
+
+                                //remove parentID from child room node
+                               childRoomNode.RemoveParentRoomNodeIDFromRoomNode(id);
+                            }
+                        }
+                    }
+                
+            }
 
         }
         if (EditorGUI.EndChangeCheck())
@@ -133,7 +161,7 @@ public class RoomNodeSO : ScriptableObject
 
     private void processRightClickDownEvent(Event currentEvent)
     {
-        roomNodeGraph.setNodeToDrawLConnectionLineFrom(this, currentEvent.mousePosition);
+        roomNodeGraph.SetNodeToDrawLConnectionLineFrom(this, currentEvent.mousePosition);
     }
 
     private void processMouseUpEvent(Event currentEvent)
@@ -280,6 +308,30 @@ public class RoomNodeSO : ScriptableObject
     {
         parentRoomNodeIDList.Add(parentID);
         return true;
+    }
+
+    // remove childID from the node
+    public bool RemoveChildRoomNodeIDFromRoomNode(string childID)
+    {
+        //if the node contains the child id then remove it
+        if (childRoomNodeIDList.Contains(childID))
+        {
+            childRoomNodeIDList.Remove(childID);
+            return true;
+        }
+        return false;
+    }
+
+    // remove parentID from the node
+    public bool RemoveParentRoomNodeIDFromRoomNode(string parentID)
+    {
+        //if the node contains the parent id then remove it
+        if (parentRoomNodeIDList.Contains(parentID))
+        {
+            parentRoomNodeIDList.Remove(parentID);
+            return true;
+        }
+        return false;
     }
 
 #endif
