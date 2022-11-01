@@ -1228,6 +1228,26 @@ SpriteAtlas:
   - {fileID: 4381903569039974676, guid: 68d405748f5f5444eb3fa663ff95045d, type: 3}
   - {fileID: -8305513443893212134, guid: 68d405748f5f5444eb3fa663ff95045d, type: 3}
   - {fileID: 8692578424379934663, guid: 68d405748f5f5444eb3fa663ff95045d, type: 3}
+  - {fileID: -1031993390, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 779270624, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -642108085, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 570699864, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 1244841326, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 195599075, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -404649857, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -455666556, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 1535806359, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 1232339428, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -2047515132, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 394037649, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 410178697, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -1104402685, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 1993022754, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -968485231, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -1469627672, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 224183705, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: 868959934, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
+  - {fileID: -1377422456, guid: acd7177455e1e5f48b8654caa16e8619, type: 3}
   - {fileID: 6355239540195522238, guid: ee87ba749228c7d4f9cfb86eebe1f968, type: 3}
   - {fileID: -6497911552053089570, guid: ee87ba749228c7d4f9cfb86eebe1f968, type: 3}
   - {fileID: 3875906493569482782, guid: ee87ba749228c7d4f9cfb86eebe1f968, type: 3}
@@ -6058,6 +6078,26 @@ SpriteAtlas:
   - sand7_0
   - sand7_3
   - sand7_2
+  - Tilemap_QuickDecorations_1
+  - Tilemap_QuickDecorations_0
+  - Tilemap_QuickDecorations_3
+  - Tilemap_QuickDecorations_2
+  - Tilemap_QuickDecorations_5
+  - Tilemap_QuickDecorations_4
+  - Tilemap_QuickDecorations_7
+  - Tilemap_QuickDecorations_6
+  - Tilemap_QuickDecorations_9
+  - Tilemap_QuickDecorations_8
+  - Tilemap_QuickDecorations_10
+  - Tilemap_QuickDecorations_11
+  - Tilemap_QuickDecorations_12
+  - Tilemap_QuickDecorations_13
+  - Tilemap_QuickDecorations_14
+  - Tilemap_QuickDecorations_15
+  - Tilemap_QuickDecorations_16
+  - Tilemap_QuickDecorations_17
+  - Tilemap_QuickDecorations_18
+  - Tilemap_QuickDecorations_19
   - wall_old_blood02_3
   - wall_old_blood02_2
   - wall_old_blood02_1
