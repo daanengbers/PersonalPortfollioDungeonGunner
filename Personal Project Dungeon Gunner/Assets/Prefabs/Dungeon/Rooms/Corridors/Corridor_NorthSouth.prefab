@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1989272830561106909}
   - component: {fileID: 3300148191143230818}
   m_Layer: 12
-  m_Name: Corridor_NorthSouth 1
+  m_Name: Corridor_NorthSouth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

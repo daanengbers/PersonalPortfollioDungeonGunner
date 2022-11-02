@@ -3,7 +3,10 @@ guid: 8c727c27aa1101d47a6dcfef0a78465f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Prefab: {instanceID: 0}
+  - previousPefab: {instanceID: 0}
+  - RoomNodeType: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
