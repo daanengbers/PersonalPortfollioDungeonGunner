@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -39,5 +40,76 @@ public class RoomTemplateSO : ScriptableObject
 
     #endregion Tooltip
 
-    public GameObject removelaters;
+    public RoomNodeTypeSO RoomNodeType;
+
+    #region ToolTip
+
+    [Tooltip("If you remember a triangle around the room tilemap that just completly encloses it, the room lower bounds represent the bottom left corner" +
+        "of that triangle. This should be determinded from the tilemap for the room (Using the cordinate brush pointer to get the tilemap grid position" +
+        "for that bottom left corner (note: this is the local tilemap position  and not world position)")]
+
+    #endregion
+
+    public Vector2Int lowerBounds;
+
+    #region ToolTip
+
+    [Tooltip("If you remember a triangle around the room tilemap that just completly encloses it, the room upper bounds represent the top right corner" +
+        "of that triangle. This should be determinded from the tilemap for the room (Using the cordinate brush pointer to get the tilemap grid position" +
+        "for that top right corner (note: this is the local tilemap position  and not world position)")]
+
+    #endregion
+
+    public Vector2Int UpperBounds;
+
+    #region ToolTip
+
+    [Tooltip("There should be a maximun of four doorways per room - one for each compass direction. These should have a consistent 3 tile wide opening, with the middle " +
+        "tile being the doorway coordanite position")]
+
+    #endregion
+
+    [SerializeField] public List<Doorway> doorwayList;
+
+    #region ToolTip
+
+    [Tooltip("Each possible spawn position (Used for enemies and chest) for the room in tilemap coordinates should be added to this array")]
+
+    #endregion
+
+    public Vector2Int[] spawnPossitionArray;
+
+    //returns the list of entrances for the room template
+
+    public List<Doorway> GetDoorwayList()
+    {
+        return doorwayList;
+    }
+
+    #region Validation
+
+#if UNITY_EDITOR
+
+
+    //Validate SO files
+
+    private void OnValidate()
+    {
+        //set unique GUID if empty or the prefab changes
+        if(guid == "" || previousPefab != Prefab)
+        {
+            guid = GUID.Generate().ToString();
+            previousPefab = Prefab;
+            EditorUtility.SetDirty(this);
+        }
+
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);
+
+        //check spawn positions
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPossitionArray), spawnPossitionArray);
+    }
+
+#endif
+
+    #endregion Validation       
 }
