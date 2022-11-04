@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
 
 [CreateAssetMenu(fileName = "Room_", menuName = "Scriptable Objects/Dungeon/Room")]
 public class RoomTemplateSO : ScriptableObject
@@ -18,13 +16,14 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("The gameobject prefab for the room (This will contain all the tilemaps for the room and environment game objects)")]
+    [Tooltip("The gameobject prefab for the room (this will contain all the tilemaps for the room and environment game objects")]
 
     #endregion Tooltip
 
-    public GameObject Prefab;
+    public GameObject prefab;
 
-    [HideInInspector] public GameObject previousPefab; // this is used to regenerate the guid if the SO is copied and the prefab is changed
+    [HideInInspector] public GameObject previousPrefab; // this is used to regenerate the guid if the so is copied and the prefab is changed
+
 
     #region Header ROOM CONFIGURATION
 
@@ -35,52 +34,47 @@ public class RoomTemplateSO : ScriptableObject
 
     #region Tooltip
 
-    [Tooltip("The room node type SO, the room node types corrospond to the room nodes used in the room node graph. The exeptions being with corridors." +
-        " In the room node graph there is just one corridor type 'Corridor'. For the room templates there are 2 corridor node types - CorridorNS and CorridorEW ")]
+    [Tooltip("The room node type SO. The room node types correspond to the room nodes used in the room node graph.  The exceptions being with corridors.  In the room node graph there is just one corridor type 'Corridor'.  For the room templates there are 2 corridor node types - CorridorNS and CorridorEW.")]
 
     #endregion Tooltip
 
-    public RoomNodeTypeSO RoomNodeType;
+    public RoomNodeTypeSO roomNodeType;
 
-    #region ToolTip
+    #region Tooltip
 
-    [Tooltip("If you remember a triangle around the room tilemap that just completly encloses it, the room lower bounds represent the bottom left corner" +
-        "of that triangle. This should be determinded from the tilemap for the room (Using the cordinate brush pointer to get the tilemap grid position" +
-        "for that bottom left corner (note: this is the local tilemap position  and not world position)")]
+    [Tooltip("If you imagine a rectangle around the room tilemap that just completely encloses it, the room lower bounds represent the bottom left corner of that rectangle. This should be determined from the tilemap for the room (using the coordinate brush pointer to get the tilemap grid position for that bottom left corner (Note: this is the local tilemap position and NOT world position")]
 
-    #endregion
+    #endregion Tooltip
 
     public Vector2Int lowerBounds;
 
-    #region ToolTip
+    #region Tooltip
 
-    [Tooltip("If you remember a triangle around the room tilemap that just completly encloses it, the room upper bounds represent the top right corner" +
-        "of that triangle. This should be determinded from the tilemap for the room (Using the cordinate brush pointer to get the tilemap grid position" +
-        "for that top right corner (note: this is the local tilemap position  and not world position)")]
+    [Tooltip("If you imagine a rectangle around the room tilemap that just completely encloses it, the room upper bounds represent the top right corner of that rectangle. This should be determined from the tilemap for the room (using the coordinate brush pointer to get the tilemap grid position for that top right corner (Note: this is the local tilemap position and NOT world position")]
 
-    #endregion
+    #endregion Tooltip
 
-    public Vector2Int UpperBounds;
+    public Vector2Int upperBounds;
 
-    #region ToolTip
+    #region Tooltip
 
-    [Tooltip("There should be a maximun of four doorways per room - one for each compass direction. These should have a consistent 3 tile wide opening, with the middle " +
-        "tile being the doorway coordanite position")]
+    [Tooltip("There should be a maximum of four doorways for a room - one for each compass direction.  These should have a consistent 3 tile opening size, with the middle tile position being the doorway coordinate 'position'")]
 
-    #endregion
+    #endregion Tooltip
 
     [SerializeField] public List<Doorway> doorwayList;
 
-    #region ToolTip
+    #region Tooltip
 
-    [Tooltip("Each possible spawn position (Used for enemies and chest) for the room in tilemap coordinates should be added to this array")]
+    [Tooltip("Each possible spawn position (used for enemies and chests) for the room in tilemap coordinates should be added to this array")]
 
-    #endregion
+    #endregion Tooltip
 
-    public Vector2Int[] spawnPossitionArray;
+    public Vector2Int[] spawnPositionArray;
 
-    //returns the list of entrances for the room template
-
+    /// <summary>
+    /// Returns the list of Entrances for the room template
+    /// </summary>
     public List<Doorway> GetDoorwayList()
     {
         return doorwayList;
@@ -90,26 +84,24 @@ public class RoomTemplateSO : ScriptableObject
 
 #if UNITY_EDITOR
 
-
-    //Validate SO files
-
+    // Validate SO fields
     private void OnValidate()
     {
-        //set unique GUID if empty or the prefab changes
-        if(guid == "" || previousPefab != Prefab)
+        // Set unique GUID if empty or the prefab changes
+        if (guid == "" || previousPrefab != prefab)
         {
             guid = GUID.Generate().ToString();
-            previousPefab = Prefab;
+            previousPrefab = prefab;
             EditorUtility.SetDirty(this);
         }
 
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(doorwayList), doorwayList);
 
-        //check spawn positions
-        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPossitionArray), spawnPossitionArray);
+        // Check spawn positions populated
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(spawnPositionArray), spawnPositionArray);
     }
 
 #endif
 
-    #endregion Validation       
+    #endregion Validation
 }

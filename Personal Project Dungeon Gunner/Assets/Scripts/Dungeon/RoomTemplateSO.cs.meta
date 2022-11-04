@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 8c727c27aa1101d47a6dcfef0a78465f
+guid: 2708e4084c4a1534ba646096300f778c
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - Prefab: {instanceID: 0}
-  - previousPefab: {instanceID: 0}
-  - RoomNodeType: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
