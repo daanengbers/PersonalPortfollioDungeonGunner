@@ -118,7 +118,7 @@ public class DungeonLevelSO : ScriptableObject
 
                 //corridors and entrances already checked
                 if (roomNodeSO.roomNodeType.IsEntrance || roomNodeSO.roomNodeType.IsCorridorNS || roomNodeSO.roomNodeType.IsCorridorEW ||
-                    roomNodeSO.roomNodeType.IsNone)
+                    roomNodeSO.roomNodeType.IsCorridor || roomNodeSO.roomNodeType.IsNone)
                 {
                     continue;
                 }
