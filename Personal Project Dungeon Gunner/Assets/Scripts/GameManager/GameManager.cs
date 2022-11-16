@@ -51,6 +51,7 @@ public class GameManager : SingletonMonobehavior<GameManager>
         {
             case GameState.gameStarted:
 
+               
                 //play first level
                 PlayDungeonLevel(currentDungeonLevelListIndex);
 
@@ -62,7 +63,13 @@ public class GameManager : SingletonMonobehavior<GameManager>
 
     private void PlayDungeonLevel(int dungeonLevelListIndex)
     {
-
+        
+        bool dungeonBuiltSuccesfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[dungeonLevelListIndex]);
+        
+        if (!dungeonBuiltSuccesfully)
+        {
+            Debug.LogError("Coulnd build dungeon from specified rooms and node graphs!");
+        }
     }
 
     #region Validation
