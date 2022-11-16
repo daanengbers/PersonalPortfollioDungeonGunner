@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdf873b10f0ce74c8de3a8762e73c2e, type: 3}
   m_Name: DungeonLevel_2
   m_EditorClassIdentifier: 
-  levelName: 
-  roomTemplateList: []
+  levelName: Level deuz
+  roomTemplateList:
+  - {fileID: 0}
   roomNodeGraphList: []

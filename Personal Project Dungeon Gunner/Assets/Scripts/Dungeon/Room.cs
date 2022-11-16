@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room
 {
     public string id;
-    public string templateId;
+    public string templateID;
     public GameObject prefab;
     public RoomNodeTypeSO roomNodeType;
     public Vector2Int lowerBounds;
@@ -17,7 +17,7 @@ public class Room
     public string parentRoomID;
     public List<Doorway> doorWayList;
     public bool isPositioned = false;
-    public InstantiatedRoom instantiateRoom;
+    public InstantiatedRoom instantiatedRoom;
     public bool isLit = false;
     public bool isClearedOfEnemies = false;
     public bool isPreviouslyVisited = false;
